@@ -76,4 +76,17 @@ else
 	echo "It looks like the Jenkins startup service already exists"
 fi
 
+if [ ! -f /opt/jenkins/start-jenkins.sh ]
+then
+	cp /opt/jenkins/jenkinssetup/start-jenkins.sh /opt/jenkins
+	chmod 755 /opt/jenkins/start-jenkins.sh
+fi
+
+if [ ! -f /opt/jenkins/stop-jenkins.sh ]
+then
+	cp /opt/jenkins/jenkinssetup/stop-jenkins.sh /opt/jenkins
+	chmod 755 /opt/jenkins/stop-jenkins.sh
+fi
+
+
 systemctl start jenkins.service
