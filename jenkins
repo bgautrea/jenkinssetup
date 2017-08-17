@@ -1,0 +1,69 @@
+#! /bin/bash
+#
+# jenkins   Start/Stop the Jenkins Continuous Integration server.
+ 
+ 
+# Source function library.
+. /etc/rc.d/init.d/functions
+ 
+# Get config.
+. /etc/sysconfig/network
+ 
+# Check that networking is up.
+[ "${NETWORKING}" = "no" ] && exit 0
+ 
+startup=/opt/jenkins/start-jenkins.sh
+shutdown=/opt/jenkins/stop-jenkins.sh
+export JAVA_HOME=/usr/local/java/
+JENKINS_USER=jenkins
+ 
+start(){
+ echo -n $"Starting Jenkins service: "
+ su - $JENKINS_USER -c $startup
+ RETVAL=$?
+ echo
+}
+ 
+stop(){
+ action $"Stopping Jenkins service: "
+ su - $JENKINS_USER -c $shutdown
+ RETVAL=$?
+ echo
+}
+ 
+status(){
+ numproc=`ps -ef | grep [j]enkins.war | wc -l`
+ if [ $numproc -gt 0 ]; then
+  echo "Jenkins is running..."
+  else
+  echo "Jenkins is stopped..."
+ fi
+}
+ 
+restart(){
+  stop
+  sleep 5
+  start
+}
+ 
+ 
+# See how we were called.
+case "$1" in
+start)
+ start
+ ;;
+stop)
+ stop
+ ;;
+status)
+ status
+ ;;
+restart)
+ restart
+ ;;
+*)
+ echo $"Usage: $0 {start|stop|status|restart}"
+ exit 1
+esac
+ 
+exit 0
