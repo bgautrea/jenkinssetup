@@ -29,9 +29,14 @@ fi
 
 cd /opt/jenkins
 
-echo "Pulling the latest jenkins setup from GitHub"
 
-git clone https://github.com/bgautrea/jenkinssetup
+if [ ! -d /opt/jenkins/jenkinssetup ]
+then
+	echo "Pulling the latest jenkins setup from GitHub"
+	git clone https://github.com/bgautrea/jenkinssetup
+else
+	echo "looks like we've already got the jenkins setup"
+fi
 
 
 user_exists=$(id -u jenkins > /dev/null 2>&1; echo $?)
@@ -55,6 +60,7 @@ then
 	cp /opt/jenkins/jenkinssetup/jenkins.xml /etc/firewalld/services
 	firewall-cmd --reload
 	firewall-cmd --zone=public --permanent --add-service=jenkins
+	firewall-cmd --reload
 else
 	echo "The firewall service is already configured for jenkins on port 8000"
 fi
