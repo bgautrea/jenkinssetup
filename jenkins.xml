@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<service>
+  <short>JENKINS</short>
+  <description>This is the Jenkins CI Server running on port 8000.</description>
+  <port protocol="tcp" port="8000"/>
+</service>
+
