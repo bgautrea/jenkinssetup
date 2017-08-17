@@ -14,7 +14,6 @@
  
 startup=/opt/jenkins/start-jenkins.sh
 shutdown=/opt/jenkins/stop-jenkins.sh
-export JAVA_HOME=/usr/local/java/
 JENKINS_USER=jenkins
  
 start(){

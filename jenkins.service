@@ -1,0 +1,12 @@
+[Unit]
+Description=Jenkins CI Server
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/etc/init.d/jenkins start
+ExecReload=/etc/init.d/jenkins restart
+ExecStop=/etc/init.d/jenkins stop
+
+[Install]
+WantedBy=multi-user.target
